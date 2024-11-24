@@ -29,6 +29,11 @@
                         </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
+                                <a class="nav-link text-dark display-6"
+                                   asp-controller="Account"
+                                   asp-action="Profile">Hello @User.Identity.Name!</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark display-6" asp-area=""
                                    asp-controller="Account"
                                    asp-action="Logout">Logout</a>

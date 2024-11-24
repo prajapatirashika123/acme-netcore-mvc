@@ -3,6 +3,8 @@ using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using acme.Models;
 
 namespace acme.Controllers
 {
@@ -25,6 +27,17 @@ namespace acme.Controllers
                 .Build();
             await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View(new UserProfileViewModel()
+            {
+                Name = User.Identity.Name,
+                EmailAddress = User.FindFirst(c => c.Type == ClaimTypes.Email)?.Value,
+                ProfileImage = User.FindFirst(c => c.Type == "picture")?.Value
+            });
         }
     }
 }
